@@ -10,8 +10,7 @@ export const site = {
   name: "Andrew Andari",
   role: "Software & Reliability Engineer",
   tagline: "I build resilient systems and hunt down the failures others miss.",
-  // TODO: replace with your real contact email
-  email: "hello@andrewandari.dev",
+  email: "andrewandari96@gmail.com",
   location: "Houston, TX",
   availability: "Open to SWE / SRE internships & new-grad roles",
 };
@@ -23,68 +22,75 @@ export const socials: SocialLink[] = [
 
 export const heroTerminalLines = [
   { prompt: "$", command: "whoami", output: "andrew.andari — CS @ University of Houston" },
-  { prompt: "$", command: "cat focus.txt", output: "software engineering · site reliability · systems" },
+  { prompt: "$", command: "cat focus.txt", output: "software engineering · site reliability · full-stack" },
   { prompt: "$", command: "uptime", output: "shipping since 2023 — load: reliability-first" },
 ];
 
 export const about = {
   paragraphs: [
-    "I'm a Computer Science student at the University of Houston with a bias toward the unglamorous work that keeps software alive in production: integration, testing, observability, and process. I got my start in engineering not by building toy apps, but by keeping real hardware and software running together in the field.",
-    "At Safe Fleet I worked at the intersection of AI-powered devices and the production pipelines that ship them — troubleshooting hardware/software integration for license-plate detection systems and bodycams, and driving QA improvements that measurably reduced defects. That experience shaped how I write code: instrument it, test it, and assume it will fail in interesting ways.",
-    "I'm now targeting Software Engineering and Site Reliability Engineering roles where I can build systems that are fast, observable, and hard to break.",
+    "I'm a Computer Science student at the University of Houston (Dean's List) with a bias toward the unglamorous work that keeps software alive in production: integration, testing, observability, and process. I got my start in engineering not by building toy apps, but by keeping real hardware and software running together in the field.",
+    "At Safe Fleet Coban Technologies I worked at the intersection of AI-powered devices and the production pipelines that ship them — diagnosing hardware/software integration issues on license-plate detection systems and body cameras, documenting fixes into standard operating procedures, and executing QA testing that measurably decreased defects. That experience shaped how I write code: instrument it, test it, and assume it will fail in interesting ways.",
+    "Outside of work I ship full-stack products end to end — from a production-deployed pickup basketball coordination platform on Supabase and Mapbox, to an AI-assisted circular-economy exchange prototype. I'm now targeting Software Engineering and Site Reliability Engineering roles where I can build systems that are fast, observable, and hard to break.",
   ],
   quickFacts: [
     { label: "Location", value: "Houston, TX" },
-    { label: "Degree", value: "B.S. Computer Science" },
+    { label: "Degree", value: "B.A. Computer Science" },
     { label: "School", value: "University of Houston" },
-    { label: "Graduation", value: "2027" },
-    { label: "Focus", value: "SWE · SRE · Systems" },
+    { label: "Graduation", value: "May 2027" },
+    { label: "Honors", value: "Dean's List" },
+    { label: "Languages", value: "English · Arabic · Spanish" },
+    { label: "Focus", value: "SWE · SRE · Full-Stack" },
   ] satisfies QuickFact[],
 };
 
 export const experience: ExperienceEntry[] = [
   {
-    role: "Application Engineer",
-    company: "Safe Fleet",
+    role: "Applications Engineer (Production Associate)",
+    company: "Safe Fleet Coban Technologies",
     companyUrl: "https://www.safefleet.net",
     period: "Jan 2025 — Dec 2025",
     location: "Houston, TX",
     bullets: [
-      "Optimized production workflows for fleet-safety devices, cutting turnaround time on device provisioning and delivery.",
-      "Troubleshot hardware/software integration issues across AI license-plate detection systems and bodycams, improving field reliability.",
-      "Drove QA testing and process improvements that reduced defects and accelerated delivery to customers.",
-      "Worked across engineering and operations to turn recurring failure patterns into documented, repeatable fixes.",
+      "Partnered with engineering and operations to optimize production workflows using software-driven solutions, improving throughput and reliability across configured systems.",
+      "Diagnosed hardware/software integration issues on AI license-plate detection systems and body cameras; documented fixes and standard operating procedures to reduce repeat incidents.",
+      "Executed QA testing and data-driven process improvements that decreased defects and accelerated delivery timelines.",
+      "Supported internal stakeholders and customers with technical troubleshooting, ensuring on-time deployments and strong satisfaction.",
     ],
-    tags: ["QA & Testing", "Hardware/Software Integration", "AI Detection Systems", "Process Improvement", "Reliability"],
+    tags: ["QA Testing", "Hardware/Software Integration", "AI Detection Systems", "Process Optimization", "Reliability"],
   },
   {
-    role: "B.S. Computer Science",
+    role: "B.A. Computer Science",
     company: "University of Houston",
     companyUrl: "https://www.uh.edu",
-    period: "2023 — 2027",
+    period: "Aug 2023 — May 2027",
     location: "Houston, TX",
     bullets: [
-      "Coursework spanning data structures & algorithms, computer systems, and software engineering.",
-      "Building projects that emphasize reliability, tooling, and clean systems design.",
+      "Dean's List honoree.",
+      "CougarCS member (Fall 2024 — Spring 2025): technical workshops on Git/GitHub version control, game testing, and introductory UI/UX design.",
+      "Deep-dive sessions on Large Language Models (LLMs), collaborating with peers to strengthen teamwork and software engineering practices.",
     ],
-    tags: ["C++", "Python", "Java", "Data Structures", "Systems"],
+    tags: ["C++", "Python", "Java", "Data Structures", "CougarCS"],
   },
 ];
 
 export const projects: Project[] = [
   {
-    name: "OurBudgetApp",
+    name: "Pickup Basketball Coordination Platform",
     description:
-      "A collaborative budgeting web app for tracking shared expenses and planning spending — built end-to-end with a JavaScript stack and deployed to the cloud.",
-    tech: ["JavaScript", "Node.js", "HTML/CSS"],
-    github: "https://github.com/andelu/ourbudgetapp",
+      "Production-deployed full-stack app for organizing pickup basketball: group coordination, court discovery, real-time RSVPs, and automated team generation. Supabase handles auth, relational modeling, and real-time updates, with fine-grained Row Level Security enforcing group-scoped permissions across sessions, RSVPs, teams, and notifications. Mapbox powers court search and geocoding; deployed on Vercel.",
+    tech: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Mapbox"],
   },
   {
-    name: "FastAI Model Deployment",
+    name: "WasteFlow: Circular Exchange Platform",
     description:
-      "Production deployment pipeline for a fastai v3 deep-learning model, serving inference over HTTP on Render — an early exercise in getting ML out of the notebook and into a running service.",
-    tech: ["Python", "fastai", "Render", "Docker"],
-    github: "https://github.com/andelu/fastai-v3",
+      "Full-stack industrial symbiosis prototype that matches companies' waste outputs with material demands to support circular-economy workflows. A modular Next.js + React frontend delivers AI-driven compatibility insights, backed by a lightweight FastAPI REST service, with responsive and accessible Tailwind UI components for cross-device usability.",
+    tech: ["Next.js", "React", "TypeScript", "FastAPI", "Python", "Tailwind CSS"],
+  },
+  {
+    name: "Weather Application",
+    description:
+      "Cross-platform mobile weather app built with React Native and TypeScript, retrieving real-time data from the OpenWeather API. Robust error handling and optimized asynchronous requests keep it reliable and low-latency, with clean architecture, reusable components, and strict typing for maintainability.",
+    tech: ["React Native", "TypeScript", "Expo", "OpenWeather API"],
   },
   {
     name: "This Portfolio",
@@ -98,31 +104,44 @@ export const projects: Project[] = [
 export const skillGroups: SkillGroup[] = [
   {
     label: "Languages",
-    skills: ["Python", "C++", "Java", "TypeScript", "JavaScript", "SQL", "HTML/CSS"],
+    skills: ["TypeScript", "Python", "C++", "Java", "C#", "JavaScript", "SQL", "R", "HTML/CSS"],
+  },
+  {
+    label: "Frameworks & Platforms",
+    skills: [
+      "React",
+      "React Native",
+      "Next.js",
+      "FastAPI",
+      "Supabase",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Expo",
+      "Unity Engine",
+      "Vercel",
+    ],
+  },
+  {
+    label: "Engineering Practices",
+    skills: [
+      "REST APIs",
+      "Asynchronous Programming",
+      "State Management",
+      "Git & GitHub",
+      "QA Testing",
+      "Troubleshooting",
+      "Process Optimization",
+    ],
   },
   {
     label: "Reliability & Systems",
     skills: [
-      "QA Testing",
       "Hardware/Software Integration",
-      "Troubleshooting",
-      "Workflow Optimization",
-      "Process Improvement",
-      "Debugging",
-    ],
-  },
-  {
-    label: "AI & Applied",
-    skills: [
       "AI Detection Systems",
-      "License-Plate Recognition",
-      "ML-Backed Device Integration",
-      "Model Deployment",
+      "Defect Reduction",
+      "SOP Documentation",
+      "Production Workflows",
     ],
-  },
-  {
-    label: "Tools & Frameworks",
-    skills: ["Git", "Node.js", "Next.js", "React", "Tailwind CSS", "Linux"],
   },
 ];
 

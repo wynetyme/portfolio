@@ -11,7 +11,7 @@ export default function Projects() {
           <SectionHeading index="03" label="projects" title="Things I've Built" />
         </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2">
           {projects.map((project, i) => (
             <Reveal key={project.name} delay={i * 0.1} className="h-full">
               <ProjectCard project={project} />
