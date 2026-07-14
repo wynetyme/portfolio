@@ -75,10 +75,11 @@ export const experience: ExperienceEntry[] = [
 
 export const projects: Project[] = [
   {
-    name: "Pickup Basketball Coordination Platform",
+    name: "WHoops",
     description:
-      "Production-deployed full-stack app for organizing pickup basketball: group coordination, court discovery, real-time RSVPs, and automated team generation. Supabase handles auth, relational modeling, and real-time updates, with fine-grained Row Level Security enforcing group-scoped permissions across sessions, RSVPs, teams, and notifications. Mapbox powers court search and geocoding; deployed on Vercel.",
+      "Production-deployed full-stack platform for organizing pickup basketball: group coordination, court discovery, real-time RSVPs, and automated team generation. Supabase handles auth, relational modeling, and real-time updates, with fine-grained Row Level Security enforcing group-scoped permissions across sessions, RSVPs, teams, and notifications. Mapbox powers court search and geocoding; deployed on Vercel.",
     tech: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Mapbox"],
+    live: "https://whoops-theta.vercel.app",
   },
   {
     name: "WasteFlow: Circular Exchange Platform",
