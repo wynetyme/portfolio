@@ -1,18 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { navLinks, site } from "@/lib/data";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string>("");
   const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const ids = navLinks.map((link) => link.href.slice(1));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-background/80 backdrop-blur-md">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6"
+        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6"
       >
         <a
           href="#top"
@@ -24,16 +42,34 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <ul className="hidden items-center gap-7 sm:flex">
-          {navLinks.map((link, i) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="font-mono text-xs text-muted transition-colors hover:text-accent"
-              >
-                <span className="text-accent">0{i + 1}.</span> {link.label}
-              </a>
-            </li>
-          ))}
+          {navLinks.map((link, i) => {
+            const isActive = active === link.href;
+            return (
+              <li key={link.href} className="relative">
+                <a
+                  href={link.href}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`font-mono text-xs transition-colors hover:text-accent ${
+                    isActive ? "text-accent" : "text-muted"
+                  }`}
+                >
+                  <span className="text-accent">0{i + 1}.</span> {link.label}
+                </a>
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    aria-hidden="true"
+                    className="absolute -bottom-[1.4rem] left-0 right-0 h-[2px] bg-accent"
+                    transition={
+                      prefersReducedMotion
+                        ? { duration: 0 }
+                        : { type: "spring", stiffness: 380, damping: 32 }
+                    }
+                  />
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {/* Mobile toggle */}
@@ -87,7 +123,9 @@ export default function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block py-3 font-mono text-sm text-muted transition-colors hover:text-accent"
+                    className={`block py-3 font-mono text-sm transition-colors hover:text-accent ${
+                      active === link.href ? "text-accent" : "text-muted"
+                    }`}
                   >
                     <span className="text-accent">0{i + 1}.</span> {link.label}
                   </a>

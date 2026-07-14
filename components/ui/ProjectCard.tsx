@@ -1,6 +1,13 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "framer-motion";
 import type { Project } from "@/lib/types";
 import TechTag from "./TechTag";
 
@@ -35,14 +42,57 @@ function ExternalLinkIcon() {
   );
 }
 
+const TILT_DEG = 5;
+
 export default function ProjectCard({ project }: ProjectCardProps) {
   const prefersReducedMotion = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const springRotateX = useSpring(rotateX, { stiffness: 220, damping: 20 });
+  const springRotateY = useSpring(rotateY, { stiffness: 220, damping: 20 });
+
+  const spotX = useMotionValue(50);
+  const spotY = useMotionValue(50);
+  const spotXPercent = useMotionTemplate`${spotX}%`;
+  const spotYPercent = useMotionTemplate`${spotY}%`;
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    spotX.set(px * 100);
+    spotY.set(py * 100);
+    if (!prefersReducedMotion) {
+      rotateY.set((px - 0.5) * TILT_DEG * 2);
+      rotateX.set((0.5 - py) * TILT_DEG * 2);
+    }
+  };
+
+  const onPointerLeave = () => {
+    rotateX.set(0);
+    rotateY.set(0);
+  };
 
   return (
     <motion.article
+      ref={ref}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
+      style={{
+        rotateX: prefersReducedMotion ? 0 : springRotateX,
+        rotateY: prefersReducedMotion ? 0 : springRotateY,
+        transformPerspective: 900,
+        // Feed the CSS spotlight gradient
+        ["--spot-x" as string]: spotXPercent,
+        ["--spot-y" as string]: spotYPercent,
+      }}
       whileHover={prefersReducedMotion ? undefined : { y: -6 }}
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="group flex h-full flex-col rounded-xl border border-line bg-surface p-6 transition-colors hover:border-accent/60 hover:bg-surface-hover hover:shadow-[0_0_28px_rgba(34,211,238,0.08)]"
+      className="spotlight-card group flex h-full flex-col rounded-xl border border-line bg-surface p-6 transition-colors hover:border-accent/60 hover:bg-surface-hover hover:shadow-[0_0_34px_rgba(34,211,238,0.12)]"
     >
       <div className="flex items-start justify-between gap-4">
         <h3 className="text-lg font-semibold text-foreground transition-colors group-hover:text-accent">
