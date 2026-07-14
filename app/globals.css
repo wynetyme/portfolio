@@ -51,8 +51,13 @@ body {
   color: var(--background);
 }
 
-/* Subtle dot-grid backdrop */
-.dot-grid {
+/* Subtle dot-grid backdrop — drawn on a pseudo-element so the fade mask
+   only affects the dots, never the section's content */
+.dot-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   background-image: radial-gradient(rgba(139, 139, 150, 0.14) 1px, transparent 1px);
   background-size: 28px 28px;
   mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);

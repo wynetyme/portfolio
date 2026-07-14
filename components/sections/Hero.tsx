@@ -159,7 +159,7 @@ export default function Hero() {
               type="button"
               onClick={() => setFlips((f) => f + 1)}
               aria-label="Flip the portrait"
-              className="portrait-ring block cursor-pointer"
+              className="portrait-ring block cursor-pointer select-none"
               whileHover={prefersReducedMotion ? undefined : { scale: 1.03 }}
               whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
               animate={prefersReducedMotion ? undefined : { rotateY: flips * 360 }}
@@ -173,7 +173,8 @@ export default function Hero() {
                   width={288}
                   height={288}
                   priority
-                  className="h-50 w-50 rounded-full object-cover sm:h-64 sm:w-64 lg:h-72 lg:w-72"
+                  draggable={false}
+                  className="pointer-events-none h-50 w-50 select-none rounded-full object-cover sm:h-64 sm:w-64 lg:h-72 lg:w-72"
                 />
               </div>
             </motion.button>
