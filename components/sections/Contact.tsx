@@ -5,7 +5,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 export default function Contact() {
   return (
     <section id="contact" className="scroll-mt-20 py-24">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-7xl px-6">
         <Reveal>
           <SectionHeading index="05" label="contact" title="Get in Touch" />
         </Reveal>

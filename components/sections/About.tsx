@@ -5,7 +5,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 export default function About() {
   return (
     <section id="about" className="scroll-mt-20 py-24">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-7xl px-6">
         <Reveal>
           <SectionHeading index="01" label="about" title="About Me" />
         </Reveal>

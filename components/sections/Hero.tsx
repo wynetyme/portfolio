@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { site, socials } from "@/lib/data";
 import TerminalCard from "@/components/ui/TerminalCard";
 import Typewriter from "@/components/ui/Typewriter";
@@ -50,14 +51,18 @@ function FloatingBadge({
   );
 }
 
+const EGG_THRESHOLD = 5;
+
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion();
+  const [flips, setFlips] = useState(0);
+  const foundEgg = flips >= EGG_THRESHOLD;
 
   return (
     <section id="top" className="dot-grid relative flex min-h-screen items-center pt-16">
       <div className="aurora" aria-hidden="true" />
 
-      <div className="relative mx-auto w-full max-w-6xl px-6 py-24">
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-24">
         <motion.div
           variants={prefersReducedMotion ? undefined : container}
           initial={prefersReducedMotion ? false : "hidden"}
@@ -150,22 +155,43 @@ export default function Hero() {
               <span className="text-violet">◆</span> Houston, TX
             </FloatingBadge>
 
-            <motion.div
-              className="portrait-ring"
+            <motion.button
+              type="button"
+              onClick={() => setFlips((f) => f + 1)}
+              aria-label="Flip the portrait"
+              className="portrait-ring block cursor-pointer"
               whileHover={prefersReducedMotion ? undefined : { scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 260, damping: 18 }}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
+              animate={prefersReducedMotion ? undefined : { rotateY: flips * 360 }}
+              transition={{ duration: 0.7, ease: [0.45, 0, 0.25, 1] }}
+              style={{ transformPerspective: 900 }}
             >
               <div className="rounded-full bg-background p-1.5">
                 <Image
                   src="/profile.jpg"
                   alt="Portrait of Andrew Andari"
-                  width={320}
-                  height={320}
+                  width={288}
+                  height={288}
                   priority
-                  className="h-56 w-56 rounded-full object-cover sm:h-72 sm:w-72 lg:h-80 lg:w-80"
+                  className="h-50 w-50 rounded-full object-cover sm:h-64 sm:w-64 lg:h-72 lg:w-72"
                 />
               </div>
-            </motion.div>
+            </motion.button>
+
+            {/* Coin-flip easter egg */}
+            <AnimatePresence>
+              {foundEgg && (
+                <motion.p
+                  role="status"
+                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 20 }}
+                  className="absolute -bottom-14 left-1/2 z-10 w-max -translate-x-1/2 rounded-full border border-accent/60 bg-surface/95 px-4 py-2 font-mono text-xs text-accent shadow-[0_0_24px_rgba(34,211,238,0.25)] backdrop-blur"
+                >
+                  hey there ;) you found me
+                </motion.p>
+              )}
+            </AnimatePresence>
 
             {/* Glow under the portrait */}
             <div
