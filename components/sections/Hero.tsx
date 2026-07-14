@@ -166,7 +166,17 @@ export default function Hero() {
               transition={{ duration: 0.7, ease: [0.45, 0, 0.25, 1] }}
               style={{ transformPerspective: 900 }}
             >
-              <div className="rounded-full bg-background p-1.5">
+              {/* Idle coin-wobble hinting that the portrait is clickable */}
+              <motion.div
+                className="rounded-full bg-background p-1.5"
+                animate={
+                  prefersReducedMotion || foundEgg
+                    ? undefined
+                    : { rotateY: [0, 10, 0, -10, 0] }
+                }
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                style={{ transformPerspective: 700 }}
+              >
                 <Image
                   src="/profile.jpg"
                   alt="Portrait of Andrew Andari"
@@ -176,7 +186,7 @@ export default function Hero() {
                   draggable={false}
                   className="pointer-events-none h-50 w-50 select-none rounded-full object-cover sm:h-64 sm:w-64 lg:h-72 lg:w-72"
                 />
-              </div>
+              </motion.div>
             </motion.button>
 
             {/* Coin-flip easter egg */}
