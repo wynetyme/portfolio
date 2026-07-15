@@ -30,9 +30,10 @@ export const socials: SocialLink[] = [
   },
   {
     label: "Resume",
-    href: "/Andrew_Andari_Resume.pdf",
-    handle: "Andrew_Andari_Resume.pdf",
+    href: "/resume",
+    handle: "View styled resume",
     icon: "resume",
+    external: false,
   },
 ];
 
