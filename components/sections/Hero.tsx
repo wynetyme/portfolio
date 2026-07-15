@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { site, socials } from "@/lib/data";
 import SocialIcon from "@/components/ui/SocialIcon";
@@ -53,11 +53,94 @@ function FloatingBadge({
 }
 
 const EGG_THRESHOLD = 5;
+const EGG_REVEAL_MS = 750;
+const EGG_HOVER_MS = 3500;
+const EGG_SLAM_MS = 550;
+
+type EggPhase = "idle" | "reveal" | "hover" | "slam" | "done";
 
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const [flips, setFlips] = useState(0);
+  const [eggPhase, setEggPhase] = useState<EggPhase>("idle");
+  const [showEggGif, setShowEggGif] = useState(false);
   const foundEgg = flips >= EGG_THRESHOLD;
+  const eggBusy =
+    eggPhase === "reveal" || eggPhase === "hover" || eggPhase === "slam";
+
+  useEffect(() => {
+    if (eggPhase === "reveal") {
+      const t = window.setTimeout(() => setEggPhase("hover"), EGG_REVEAL_MS);
+      return () => window.clearTimeout(t);
+    }
+    if (eggPhase === "hover") {
+      const t = window.setTimeout(() => {
+        setShowEggGif(false);
+        setEggPhase("slam");
+      }, EGG_HOVER_MS);
+      return () => window.clearTimeout(t);
+    }
+    if (eggPhase === "slam") {
+      const t = window.setTimeout(() => setEggPhase("done"), EGG_SLAM_MS);
+      return () => window.clearTimeout(t);
+    }
+  }, [eggPhase]);
+
+  function handlePortraitClick() {
+    if (eggBusy) return;
+
+    setFlips((prev) => {
+      const next = prev + 1;
+      if (next === EGG_THRESHOLD && eggPhase === "idle") {
+        if (prefersReducedMotion) {
+          setEggPhase("done");
+        } else {
+          setShowEggGif(true);
+          setEggPhase("reveal");
+        }
+      }
+      return next;
+    });
+  }
+
+  const portraitAnimate = (() => {
+    if (prefersReducedMotion) return undefined;
+    if (eggPhase === "reveal") {
+      return { rotateY: flips * 360, y: 0, scale: 1 };
+    }
+    if (eggPhase === "hover") {
+      return { rotateY: flips * 360, y: [0, -16, 0], scale: 1 };
+    }
+    if (eggPhase === "slam") {
+      return {
+        rotateY: flips * 360,
+        y: [-48, 14, -6, 0],
+        scale: [1.12, 0.88, 1.06, 1],
+      };
+    }
+    return { rotateY: flips * 360, y: 0, scale: 1 };
+  })();
+
+  const portraitTransition = (() => {
+    if (eggPhase === "reveal") {
+      return { duration: EGG_REVEAL_MS / 1000, ease: [0.45, 0, 0.25, 1] as const };
+    }
+    if (eggPhase === "hover") {
+      return {
+        y: { duration: EGG_HOVER_MS / 1000, ease: "easeInOut" as const },
+        rotateY: { duration: 0 },
+        scale: { duration: 0 },
+      };
+    }
+    if (eggPhase === "slam") {
+      return {
+        duration: EGG_SLAM_MS / 1000,
+        times: [0, 0.4, 0.72, 1],
+        ease: [0.2, 0.9, 0.2, 1] as const,
+      };
+    }
+    return { duration: 0.7, ease: [0.45, 0, 0.25, 1] as const };
+  })();
 
   return (
     <section id="top" className="dot-grid relative flex min-h-screen items-center pt-16">
@@ -122,17 +205,17 @@ export default function Hero() {
               {socials.map((social) => {
                 const isExternal = social.external ?? true;
                 return (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  {...(isExternal
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                  className="flex items-center gap-2.5 rounded-md border border-accent px-6 py-3 font-mono text-sm font-semibold text-accent transition-colors hover:bg-accent-dim"
-                >
-                  <SocialIcon icon={social.icon} className="h-4.5 w-4.5" />
-                  {social.label}
-                </a>
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    {...(isExternal
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    className="flex items-center gap-2.5 rounded-md border border-accent px-6 py-3 font-mono text-sm font-semibold text-accent transition-colors hover:bg-accent-dim"
+                  >
+                    <SocialIcon icon={social.icon} className="h-4.5 w-4.5" />
+                    {social.label}
+                  </a>
                 );
               })}
               <a
@@ -161,35 +244,52 @@ export default function Hero() {
 
             <motion.button
               type="button"
-              onClick={() => setFlips((f) => f + 1)}
+              onClick={handlePortraitClick}
               aria-label="Flip the portrait"
               className="portrait-ring block cursor-pointer select-none"
-              whileHover={prefersReducedMotion ? undefined : { scale: 1.03 }}
-              whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
-              animate={prefersReducedMotion ? undefined : { rotateY: flips * 360 }}
-              transition={{ duration: 0.7, ease: [0.45, 0, 0.25, 1] }}
+              whileHover={
+                prefersReducedMotion || eggBusy ? undefined : { scale: 1.03 }
+              }
+              whileTap={
+                prefersReducedMotion || eggBusy ? undefined : { scale: 0.97 }
+              }
+              animate={portraitAnimate}
+              transition={portraitTransition}
               style={{ transformPerspective: 900 }}
             >
               {/* Idle coin-wobble hinting that the portrait is clickable */}
               <motion.div
                 className="rounded-full bg-background p-1.5"
                 animate={
-                  prefersReducedMotion || foundEgg
+                  prefersReducedMotion || foundEgg || eggBusy
                     ? undefined
                     : { rotateY: [0, 10, 0, -10, 0] }
                 }
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 style={{ transformPerspective: 700 }}
               >
-                <Image
-                  src="/profile.jpg"
-                  alt="Portrait of Andrew Andari"
-                  width={288}
-                  height={288}
-                  priority
-                  draggable={false}
-                  className="pointer-events-none h-50 w-50 select-none rounded-full object-cover sm:h-64 sm:w-64 lg:h-72 lg:w-72"
-                />
+                {showEggGif ? (
+                  // Native img so the animated GIF actually plays (next/image freezes GIFs).
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src="/coin-egg.gif"
+                    alt="Easter egg animation"
+                    width={288}
+                    height={288}
+                    draggable={false}
+                    className="pointer-events-none h-50 w-50 select-none rounded-full object-cover sm:h-64 sm:w-64 lg:h-72 lg:w-72"
+                  />
+                ) : (
+                  <Image
+                    src="/profile.jpg"
+                    alt="Portrait of Andrew Andari"
+                    width={288}
+                    height={288}
+                    priority
+                    draggable={false}
+                    className="pointer-events-none h-50 w-50 select-none rounded-full object-cover sm:h-64 sm:w-64 lg:h-72 lg:w-72"
+                  />
+                )}
               </motion.div>
             </motion.button>
 
