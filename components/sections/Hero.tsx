@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { site, socials } from "@/lib/data";
+import SocialIcon from "@/components/ui/SocialIcon";
 import TerminalCard from "@/components/ui/TerminalCard";
 import Typewriter from "@/components/ui/Typewriter";
 
@@ -25,8 +26,8 @@ const item = {
 
 const roles = [
   "Software Engineer.",
-  "Reliability Engineer.",
   "Full-Stack Builder.",
+  "Problem Solver.",
   "Systems Debugger.",
 ];
 
@@ -97,8 +98,8 @@ export default function Hero() {
               className="mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
             >
               {site.tagline} Computer Science at the University of Houston, with
-              production experience keeping AI-powered fleet systems reliable in the
-              field.
+              production experience shipping and supporting AI-powered fleet
+              systems in the field.
             </motion.p>
 
             <motion.div
@@ -118,25 +119,24 @@ export default function Hero() {
               >
                 View Projects
               </a>
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 rounded-md border border-accent px-6 py-3 font-mono text-sm font-semibold text-accent transition-colors hover:bg-accent-dim"
+                >
+                  <SocialIcon icon={social.icon} className="h-4.5 w-4.5" />
+                  {social.label}
+                </a>
+              ))}
               <a
                 href="#contact"
-                className="rounded-md border border-accent px-6 py-3 font-mono text-sm font-semibold text-accent transition-colors hover:bg-accent-dim"
+                className="font-mono text-sm text-muted underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
               >
                 Get in Touch
               </a>
-              <div className="flex items-center gap-4 sm:ml-2">
-                {socials.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-xs text-muted underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
-                  >
-                    {social.label}
-                  </a>
-                ))}
-              </div>
             </motion.div>
           </div>
 
@@ -146,7 +146,7 @@ export default function Hero() {
             className="relative mx-auto w-fit lg:mx-0 lg:justify-self-center"
           >
             <FloatingBadge className="-left-6 top-6" delay={0}>
-              <span className="text-accent">▲</span> SWE / SRE
+              <span className="text-accent">▲</span> SWE
             </FloatingBadge>
             <FloatingBadge className="-right-4 top-1/3" delay={1.4}>
               <span className="text-status">●</span> UH &apos;27

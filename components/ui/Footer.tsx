@@ -1,4 +1,5 @@
 import { site, socials } from "@/lib/data";
+import SocialIcon from "@/components/ui/SocialIcon";
 
 export default function Footer() {
   return (
@@ -18,8 +19,9 @@ export default function Footer() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-xs text-muted transition-colors hover:text-accent"
+              className="flex items-center gap-2 font-mono text-xs text-muted transition-colors hover:text-accent"
             >
+              <SocialIcon icon={social.icon} className="h-4 w-4" />
               {social.label}
             </a>
           ))}

@@ -13,22 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Andrew Andari — Software & Reliability Engineer",
+  title: "Andrew Andari — Software Engineer",
   description:
-    "Portfolio of Andrew Andari — Computer Science student at the University of Houston focused on software engineering and site reliability. Building resilient systems and hunting down the failures others miss.",
+    "Portfolio of Andrew Andari — Computer Science student at the University of Houston focused on software engineering. Building full-stack products end to end, from data models and APIs to polished interfaces.",
   keywords: [
     "Andrew Andari",
     "Software Engineer",
-    "Site Reliability Engineer",
-    "SRE",
     "SWE",
+    "Full-Stack Developer",
     "University of Houston",
     "Portfolio",
   ],
   openGraph: {
-    title: "Andrew Andari — Software & Reliability Engineer",
+    title: "Andrew Andari — Software Engineer",
     description:
-      "Computer Science student at the University of Houston building resilient systems. Targeting SWE and SRE roles.",
+      "Computer Science student at the University of Houston building full-stack products. Targeting Software Engineering roles.",
     type: "website",
     images: ["/profile.jpg"],
   },
