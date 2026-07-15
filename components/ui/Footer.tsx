@@ -13,18 +13,22 @@ export default function Footer() {
           all systems operational
         </p>
         <div className="flex items-center gap-5">
-          {socials.map((social) => (
+          {socials.map((social) => {
+            const isExternal = social.external ?? true;
+            return (
             <a
               key={social.label}
               href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(isExternal
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
               className="flex items-center gap-2 font-mono text-xs text-muted transition-colors hover:text-accent"
             >
               <SocialIcon icon={social.icon} className="h-4 w-4" />
               {social.label}
             </a>
-          ))}
+            );
+          })}
         </div>
         <p className="font-mono text-xs text-muted">
           © {new Date().getFullYear()} {site.name} · Built with Next.js, Tailwind CSS &

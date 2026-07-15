@@ -3,6 +3,8 @@ export type SocialLink = {
   href: string;
   handle: string;
   icon: "github" | "linkedin" | "resume";
+  /** When false, opens in the same tab (default true for external profiles). */
+  external?: boolean;
 };
 
 export type QuickFact = {

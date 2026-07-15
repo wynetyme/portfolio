@@ -78,15 +78,18 @@ export default function Navbar() {
 
           {/* Always-visible social links */}
           <div className="flex items-center gap-2">
-            {socials.map((social) => (
+            {socials.map((social) => {
+              const isExternal = social.external ?? true;
+              return (
               <a
                 key={social.label}
                 href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(isExternal
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 aria-label={
                   social.icon === "resume"
-                    ? "View resume PDF (opens in new tab)"
+                    ? "View styled resume"
                     : `${social.label} profile (opens in new tab)`
                 }
                 title={social.label}
@@ -94,7 +97,8 @@ export default function Navbar() {
               >
                 <SocialIcon icon={social.icon} className="h-4.5 w-4.5" />
               </a>
-            ))}
+              );
+            })}
           </div>
 
           {/* Mobile toggle */}
@@ -158,18 +162,22 @@ export default function Navbar() {
                 </li>
               ))}
               <li className="mt-2 flex flex-wrap items-center gap-3 border-t border-line pt-4">
-                {socials.map((social) => (
+                {socials.map((social) => {
+                  const isExternal = social.external ?? true;
+                  return (
                   <a
                     key={social.label}
                     href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    {...(isExternal
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
                     className="flex items-center gap-2 rounded-md border border-line px-4 py-2.5 font-mono text-sm text-foreground transition-colors hover:border-accent hover:text-accent"
                   >
                     <SocialIcon icon={social.icon} className="h-4 w-4" />
                     {social.label}
                   </a>
-                ))}
+                  );
+                })}
               </li>
             </ul>
           </motion.div>

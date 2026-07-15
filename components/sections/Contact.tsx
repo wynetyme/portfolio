@@ -28,12 +28,15 @@ export default function Contact() {
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              {socials.map((social) => (
+              {socials.map((social) => {
+                const isExternal = social.external ?? true;
+                return (
                 <a
                   key={social.label}
                   href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...(isExternal
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   className="group flex items-center gap-4 rounded-lg border border-line bg-background p-4 text-left transition-colors hover:border-accent"
                 >
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-surface text-foreground transition-colors group-hover:text-accent">
@@ -48,7 +51,8 @@ export default function Contact() {
                     </span>
                   </span>
                 </a>
-              ))}
+                );
+              })}
             </div>
 
             <a
