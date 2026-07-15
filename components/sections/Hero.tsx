@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { site, socials } from "@/lib/data";
 import SocialIcon from "@/components/ui/SocialIcon";
+import EggMessage from "@/components/ui/EggMessage";
 import TerminalCard from "@/components/ui/TerminalCard";
 import Typewriter from "@/components/ui/Typewriter";
 
@@ -293,20 +294,11 @@ export default function Hero() {
               </motion.div>
             </motion.button>
 
-            {/* Coin-flip easter egg */}
-            <AnimatePresence>
-              {foundEgg && (
-                <motion.p
-                  role="status"
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ type: "spring", stiffness: 320, damping: 20 }}
-                  className="absolute -bottom-14 left-1/2 z-10 w-max -translate-x-1/2 rounded-full border border-accent/60 bg-surface/95 px-4 py-2 font-mono text-xs text-accent shadow-[0_0_24px_rgba(34,211,238,0.25)] backdrop-blur"
-                >
-                  hey there ;) you found me
-                </motion.p>
-              )}
-            </AnimatePresence>
+            {/* Coin-flip easter egg message — types in with the GIF, fades + backspaces out */}
+            <EggMessage
+              active={eggPhase !== "idle"}
+              dismiss={eggPhase === "slam" || eggPhase === "done"}
+            />
 
             {/* Glow under the portrait */}
             <div
