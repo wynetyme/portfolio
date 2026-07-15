@@ -12,7 +12,7 @@ export default function Contact() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="mx-auto max-w-2xl rounded-xl border border-line bg-surface p-8 text-center sm:p-12">
+          <div className="mx-auto max-w-3xl rounded-xl border border-line bg-surface p-8 text-center sm:p-12">
             <p className="inline-flex items-center gap-2 rounded-full border border-line bg-background px-4 py-1.5 font-mono text-xs text-status">
               <span
                 aria-hidden="true"
@@ -23,11 +23,11 @@ export default function Contact() {
 
             <p className="mt-6 text-base leading-relaxed text-muted">
               I&apos;m actively looking for software engineering teams to build
-              with. The fastest way to see what I do is my GitHub and the projects
-              above — and if something clicks, my inbox is open.
+              with. The fastest way to see what I do is my GitHub, resume, and
+              the projects above — and if something clicks, my inbox is open.
             </p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {socials.map((social) => (
                 <a
                   key={social.label}
