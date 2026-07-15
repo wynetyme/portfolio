@@ -2,7 +2,7 @@ export type SocialLink = {
   label: string;
   href: string;
   handle: string;
-  icon: "github" | "linkedin";
+  icon: "github" | "linkedin" | "resume";
 };
 
 export type QuickFact = {

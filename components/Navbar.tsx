@@ -84,7 +84,11 @@ export default function Navbar() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${social.label} profile (opens in new tab)`}
+                aria-label={
+                  social.icon === "resume"
+                    ? "View resume PDF (opens in new tab)"
+                    : `${social.label} profile (opens in new tab)`
+                }
                 title={social.label}
                 className="flex h-9 w-9 items-center justify-center rounded-md text-muted transition-colors hover:bg-surface hover:text-accent"
               >
@@ -153,7 +157,7 @@ export default function Navbar() {
                   </a>
                 </li>
               ))}
-              <li className="mt-2 flex items-center gap-3 border-t border-line pt-4">
+              <li className="mt-2 flex flex-wrap items-center gap-3 border-t border-line pt-4">
                 {socials.map((social) => (
                   <a
                     key={social.label}

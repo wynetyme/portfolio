@@ -28,6 +28,12 @@ export const socials: SocialLink[] = [
     handle: "linkedin.com/in/andelu",
     icon: "linkedin",
   },
+  {
+    label: "Resume",
+    href: "/Andrew_Andari_Resume.pdf",
+    handle: "Andrew_Andari_Resume.pdf",
+    icon: "resume",
+  },
 ];
 
 export const heroTerminalLines = [
