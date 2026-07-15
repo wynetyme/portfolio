@@ -1,6 +1,6 @@
 # Andrew Andari — Developer Portfolio
 
-A premium, dark-mode personal portfolio targeting SWE and SRE roles. Fully static, accessible, and animation-rich.
+A premium, dark-mode personal portfolio targeting Software Engineering roles. Fully static, accessible, and animation-rich.
 
 ## Stack
 

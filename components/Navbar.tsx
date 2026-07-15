@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { navLinks, site } from "@/lib/data";
+import { navLinks, site, socials } from "@/lib/data";
+import SocialIcon from "@/components/ui/SocialIcon";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -40,9 +41,10 @@ export default function Navbar() {
           {site.name.toLowerCase().replace(" ", "-")}
         </a>
 
-        {/* Desktop links */}
-        <ul className="hidden items-center gap-7 sm:flex">
-          {navLinks.map((link, i) => {
+        <div className="flex items-center gap-5">
+          {/* Desktop links */}
+          <ul className="hidden items-center gap-7 sm:flex">
+            {navLinks.map((link, i) => {
             const isActive = active === link.href;
             return (
               <li key={link.href} className="relative">
@@ -70,17 +72,36 @@ export default function Navbar() {
               </li>
             );
           })}
-        </ul>
+          </ul>
 
-        {/* Mobile toggle */}
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          className="flex h-10 w-10 items-center justify-center rounded-md border border-line text-foreground sm:hidden"
-        >
+          <div aria-hidden="true" className="hidden h-4 w-px bg-line sm:block" />
+
+          {/* Always-visible social links */}
+          <div className="flex items-center gap-2">
+            {socials.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${social.label} profile (opens in new tab)`}
+                title={social.label}
+                className="flex h-9 w-9 items-center justify-center rounded-md text-muted transition-colors hover:bg-surface hover:text-accent"
+              >
+                <SocialIcon icon={social.icon} className="h-4.5 w-4.5" />
+              </a>
+            ))}
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="flex h-10 w-10 items-center justify-center rounded-md border border-line text-foreground sm:hidden"
+          >
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -103,7 +124,8 @@ export default function Navbar() {
               </>
             )}
           </svg>
-        </button>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
@@ -131,6 +153,20 @@ export default function Navbar() {
                   </a>
                 </li>
               ))}
+              <li className="mt-2 flex items-center gap-3 border-t border-line pt-4">
+                {socials.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 rounded-md border border-line px-4 py-2.5 font-mono text-sm text-foreground transition-colors hover:border-accent hover:text-accent"
+                  >
+                    <SocialIcon icon={social.icon} className="h-4 w-4" />
+                    {social.label}
+                  </a>
+                ))}
+              </li>
             </ul>
           </motion.div>
         )}
