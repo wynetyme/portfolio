@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     description:
       "Computer Science student at the University of Houston building full-stack products. Targeting Software Engineering roles.",
     type: "website",
-    images: ["/profile.jpg"],
+    images: ["/profile.png"],
   },
 };
 
