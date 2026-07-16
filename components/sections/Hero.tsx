@@ -275,20 +275,21 @@ export default function Hero() {
                   <img
                     src="/coin-egg.gif"
                     alt="Easter egg animation"
-                    width={288}
-                    height={288}
+                    width={320}
+                    height={320}
                     draggable={false}
-                    className="pointer-events-none h-50 w-50 select-none rounded-full object-cover sm:h-64 sm:w-64 lg:h-72 lg:w-72"
+                    className="pointer-events-none h-56 w-56 select-none rounded-full object-cover sm:h-72 sm:w-72 lg:h-80 lg:w-80"
                   />
                 ) : (
                   <Image
-                    src="/profile.jpg"
+                    src="/profile.png"
                     alt="Portrait of Andrew Andari"
-                    width={288}
-                    height={288}
+                    width={320}
+                    height={320}
                     priority
+                    unoptimized
                     draggable={false}
-                    className="pointer-events-none h-50 w-50 select-none rounded-full object-cover sm:h-64 sm:w-64 lg:h-72 lg:w-72"
+                    className="pointer-events-none h-56 w-56 select-none rounded-full object-cover sm:h-72 sm:w-72 lg:h-80 lg:w-80"
                   />
                 )}
               </motion.div>
